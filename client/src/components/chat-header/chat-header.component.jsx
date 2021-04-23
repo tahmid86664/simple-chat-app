@@ -16,9 +16,10 @@ const ChatHeader = ({ room }) => {
             </div>
             <div className="chatHeader__right">
                 <Link to="/" onClick={() => window.location.href='/'}>
-                <IconButton>
-                    <ExitToAppIcon />
-                </IconButton>
+                     {/* this onClick={() => window.location.href='/'} need for page refreshing */}
+                    <IconButton>
+                        <ExitToAppIcon />
+                    </IconButton>
                 </Link>
             </div>
         </div>

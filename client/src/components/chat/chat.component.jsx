@@ -4,7 +4,9 @@ import io from 'socket.io-client';
 
 import './chat.style.css';
 
-import ChatHeader from '../chat-header/chat-header.component'
+import ChatHeader from '../chat-header/chat-header.component';
+import ChatInput from '../chat-input/chat-input.component';
+import Messages from '../messages/messages.component';
 
 let socket;
 
@@ -62,13 +64,8 @@ const Chat = ({ location }) => {
         <div className="chat">
             <div className="chat__inner">
                 <ChatHeader room={ room }/>
-                {/* Chat messages */}
-                {/* Chat form or chat footer */}
-                {/* <input 
-                    value={message} 
-                    onChange={(event) => setMessage(event.target.value)}
-                    onKeyPress={(event) => event.key === 'Enter' ? sendMessage(event) : null}
-                /> */}
+                <Messages messages={messages} name={name} />
+                <ChatInput message={message} setMessage={setMessage} sendMessage={sendMessage}/>
             </div>
         </div>
     );
