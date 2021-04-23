@@ -35,6 +35,7 @@ io.on('connection', (socket) => {
     socket.on('join', ({ name, room }, callback) => { // here the callback is for error handling
         // console.log(name, room);
         const { err, user } = addUser({ id: socket.id, name, room })
+        console.log(socket.id, user);
 
         if (err) {
             return callback(err);
@@ -44,7 +45,18 @@ io.on('connection', (socket) => {
         socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${user.name} has just joined!`} ); // this is to let all the users know in the room that a user is joined
 
         socket.join(user.room); // join user in the room 
+
+        callback();
     });
+
+    // now send messages
+    socket.on('sendMessage', (message, callback) => {
+        const user = getUser({ id: socket.id });
+        
+        io.to(user.room).emit('message', { user: user.name, text: message});
+
+        callback();
+    })
 
     // now we've to write disconnect code for that socket 
     // which just connect right now

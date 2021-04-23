@@ -1,0 +1,15 @@
+.chat {
+    height: 100vh;
+    display: grid;
+    place-items: center;
+}
+
+.chat__inner {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30vw;
+    min-width: 300px;
+    height: 60vh;
+}

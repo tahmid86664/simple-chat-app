@@ -1,0 +1,52 @@
+.join {
+    display: grid;
+    height: 100vh;
+    place-content: center;
+}
+
+.join__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    width: 20vw;
+    min-width: 165px;
+    padding: 50px;
+    border-radius: 5%;
+}
+
+.join__heading {
+    font-size: 45px;
+    font-weight: 800;
+    border-bottom: 1.5px solid #c7c7c7;
+    padding: 0 10px;
+}
+
+.join__input__container {
+    padding: 20px 0 0 10px;
+    border-bottom: solid 1.2px #c7c7c7;
+    width: 100%;
+}
+
+.join__input {
+    border: none;
+    outline-width: 0;
+    width: 100%;
+}
+
+.join__button {
+    font-size: 15px;
+    font-weight: 600;
+    margin-top: 30px;
+    padding: 15px;
+    border-radius: 10px;
+    border-color: #c7c7c7;
+    outline-width: 0;
+    transition: all 0.4s ease-in-out;
+}
+
+.join__button:hover {
+    color: white;
+    background-color: #c7c7c7;
+    padding: 15px 25px;
+}
