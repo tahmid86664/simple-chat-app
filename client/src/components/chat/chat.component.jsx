@@ -15,8 +15,9 @@ const Chat = ({ location }) => {
     const [room, setRoom] = useState('');
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState('');
-    // const ENDPOINT = 'localhost:9000';
-    const ENDPOINT = 'message-carrier.herokuapp.com';
+    const [users, setUsers] = useState([]);
+    const ENDPOINT = 'localhost:9000';
+    // const ENDPOINT = 'message-carrier.herokuapp.com';
 
     useEffect(() => {
         const {name, room} = queryString.parse(location.search);
@@ -50,6 +51,13 @@ const Chat = ({ location }) => {
         });
     }, [messages]);
 
+    // users in room
+    useEffect(() => {
+        socket.on('roomData', (roomData, callback) => {
+            setUsers(roomData.users);
+        })
+    }, []);
+
     // function for sending messages
     const sendMessage = (event) => {
         event.preventDefault();
@@ -67,6 +75,17 @@ const Chat = ({ location }) => {
                 <ChatHeader room={ room }/>
                 <Messages messages={messages} name={name} />
                 <ChatInput message={message} setMessage={setMessage} sendMessage={sendMessage}/>
+            </div>
+            <div className="chat__showUsers">
+                <span>Active Users:</span>
+                <div className="chat__showUsers__Container">
+                    {users.map(user => 
+                        <div className="chat__showUser__Container">
+                            <div className="onlineIcon"></div>
+                            <p>{user.name}</p>
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );

@@ -1,7 +1,9 @@
 .chat {
     height: 100vh;
-    display: grid;
-    place-items: center;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .chat__inner {
@@ -12,4 +14,41 @@
     width: 30vw;
     min-width: 300px;
     height: 60vh;
+    margin-right: 50px;
+}
+
+.chat__showUsers {
+    width: 30vw;
+    min-width: 300px;
+    height: 60vh;
+    background-color: #ececec;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat__showUsers > span {
+    font-size: 28px;
+    font-weight: 650;
+    padding: 20px 20px 10px;
+}
+
+.chat__showUsers__Container {
+    font-size: 20px;
+    font-weight: 650;
+    padding: 0 20px 5px;
+    overflow: auto;
+    height: 525px;
+}
+
+.chat__showUser__Container {
+    display: flex;
+    align-items: center;
+}
+
+.onlineIcon {
+    width: 7px;
+    height: 7px;
+    background-color: lawngreen;
+    border-radius: 50%;
+    margin-right: 10px;
 }

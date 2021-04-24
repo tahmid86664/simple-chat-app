@@ -56,7 +56,7 @@ io.on('connection', (socket) => {
             return callback(err);
         }
 
-        socket.emit('message', { user: 'admin', text: `${user.name}, Welcome to the room ${user.room}!`}); // this is for welcoming the user
+        socket.emit('message', { user: 'admin', text: `Hello ${user.name}! Welcome to the room '${user.room}'`}); // this is for welcoming the user
         socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${user.name} has just joined!`} ); // this is to let all the users know in the room that a user is joined
 
         socket.join(user.room); // join user in the room 
