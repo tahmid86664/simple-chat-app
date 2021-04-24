@@ -5,20 +5,35 @@ const express = require('express');
 const http = require('http');
 const socketio = require('socket.io');
 const cors = require('cors');
+const path = require('path');
 
 const router = require('./router');
-const { addUser, removeUser, getUser, getUserInRoom } = require('./users');
+const { addUser, removeUser, getUser, getUserInRoom, getUsersInRoom } = require('./users');
 
 // appconfig
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server, {
     cors: {
-        origin: "http://localhost:3000",
+        origin: ["http://localhost:3000", "https://message-carrier.herokuapp.com/"],
         methods: ["GET", "POST"],
         credentials: true
     }
 });
+
+// production config
+const __dirname = path.resolve();
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('client/build'));
+    app.get('*', (req,res) => {
+        res.sendFile(path.resolve(
+            __dirname,
+            'client',
+            'build',
+            'index.html'
+        ));
+    });
+}
 
 const port = process.env.PORT || 9000;
 
@@ -46,6 +61,9 @@ io.on('connection', (socket) => {
 
         socket.join(user.room); // join user in the room 
 
+        // after join the room, room has new data.
+        io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom({room: user.room})})
+
         callback();
     });
 
@@ -60,8 +78,16 @@ io.on('connection', (socket) => {
 
     // now we've to write disconnect code for that socket 
     // which just connect right now
+    // when disconnect then remvoe the user
     socket.on('disconnect', () => {
-        console.log("User had left");
+        const user = removeUser({ id: socket.id });
+
+        // we need again update room data after leaving the room
+        io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom({room: user.room})})
+
+        if (user) {
+            io.to(user.room).emit('message', { user: 'admin', text: `${user.name} has left ${user.room}`})
+        }
     });
 });
 
