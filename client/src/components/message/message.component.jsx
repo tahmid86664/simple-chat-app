@@ -13,15 +13,15 @@ const Message = ({ message: { user, text }, name }) => {
 
     return (
         isSentByCurrentUser ? (
-            <div className="message">
+            <div className="message message__sender">
                 <p className="message__senderName">{trimmedName}</p>
-                <div className="message__textBox">
+                <div className="message__textBox message__marginLeft">
                     <p className="message__text">{text}</p>
                 </div>
             </div>
         ) : (
             <div className="message">
-                <div className="message__textBox">
+                <div className="message__textBox message__marginRight">
                     <p className="message__text">{text}</p>
                 </div>
                 <p className="message__senderName">{user}</p>
